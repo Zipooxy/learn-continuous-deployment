@@ -16,24 +16,27 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    permissions: 
+    
+    # 1. TAMBAHKAN BAGIAN INI AGAR GITHUB PUNYA IZIN MENGUNGGAH PACKAGE
+    permissions:
       contents: read
-      packages: write
+      packages: write 
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 
+      uses: actions/setup-java@v3
       with:
-        java-version: '21'
+        java-version: '21' # sesuaikan dengan versi Java kamu
         distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
-        cache: maven
+        server-id: github # Harus sama dengan <id> di pom.xml
+        server-username: GITHUB_ACTOR
+        server-password: GITHUB_TOKEN
         
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+    # 2. PASTIKAN TOKEN INI DISERTAKAN SAAT PERINTAH DEPLOY
+    - name: Build and Deploy
+      run: mvn deploy
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
