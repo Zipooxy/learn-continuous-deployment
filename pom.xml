@@ -16,7 +16,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/rakhaihan/learn-continuous-deployment</url>
+      <url>https://maven.pkg.github.com/Zipooxy/learn-continuous-deployment</url>
     </repository>
   </distributionManagement>
   
